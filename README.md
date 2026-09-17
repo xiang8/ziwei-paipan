@@ -8,7 +8,7 @@
 
 ## 在线使用
 
-部署在 GitHub Pages（地址见仓库 Pages / README 顶部更新）。
+**https://xiang8.github.io/ziwei-paipan/**（GitHub Pages，推 main 自动部署）
 
 ## Key 去哪拿
 
