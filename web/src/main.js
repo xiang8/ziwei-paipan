@@ -72,6 +72,7 @@ function initApiPanel() {
   $('api-base').value = cfg.customBase || '';
   $('api-base-wrap').style.display = cfg.custom ? '' : 'none';
   refreshStatus();
+  if (!hasKey()) $('api-card').open = true;   // 未配置默认弹开，保存确认后收起
 }
 function applyProvider(pid, resetModel) {
   const p = PROVIDERS[pid] || PROVIDERS.custom;

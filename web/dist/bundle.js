@@ -32621,6 +32621,7 @@ function initApiPanel() {
   $("api-base").value = cfg.customBase || "";
   $("api-base-wrap").style.display = cfg.custom ? "" : "none";
   refreshStatus();
+  if (!hasKey()) $("api-card").open = true;
 }
 function applyProvider(pid, resetModel) {
   const p = PROVIDERS[pid] || PROVIDERS.custom;
