@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>紫微排盘 · 解盘</title>
+<style>
+:root{
+  --bg:#0d1614; --bg2:#13201c; --card:#1a2925; --card2:#20322d; --line:#2d423c; --line2:#3a544c;
+  --gold:#c9a961; --gold-bright:#e6c982; --gold-dim:#7d6a40;
+  --red:#c0392b; --red-bg:rgba(192,57,43,.14);
+  --green-bg:rgba(78,165,108,.14);
+  --text:#ece4d3; --text-dim:#9c9586; --text-faint:#6b665b;
+  --serif:"STSong","Songti SC","SimSun","Noto Serif SC",serif;
+  --sans:"Microsoft YaHei","PingFang SC","Helvetica Neue",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.7;
+  background-image:radial-gradient(circle at 20% 10%,rgba(201,169,97,.05),transparent 40%),radial-gradient(circle at 80% 90%,rgba(78,165,108,.04),transparent 40%);min-height:100vh}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 24px 80px}
+/* header */
+.header{padding:24px 28px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(135deg,var(--card) 0%,var(--bg2) 100%);margin-bottom:20px;position:relative;overflow:hidden}
+.header::before{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(201,169,97,.08),transparent 70%)}
+.h-title{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--gold-bright);letter-spacing:4px}
+.h-sub{color:var(--text-dim);font-size:13px;margin-top:6px;letter-spacing:1px}
+/* 输入表单 */
+.form-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:20px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.field label{display:block;font-size:12px;color:var(--gold-dim);margin-bottom:5px;letter-spacing:1px}
+.field input,.field select{width:100%;padding:8px 11px;background:var(--bg2);border:1px solid var(--line2);border-radius:7px;color:var(--text);font-size:14px;font-family:var(--sans)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--gold-dim)}
+.btn-row{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:10px 26px;border-radius:22px;border:none;cursor:pointer;font-size:14px;font-family:var(--sans);transition:all .2s;font-weight:600}
+.btn-primary{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dim) 100%);color:#1a1408;box-shadow:0 4px 14px rgba(201,169,97,.25)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(201,169,97,.35)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-ghost{background:var(--card2);color:var(--gold);border:1px solid var(--line2)}
+.btn-ghost:hover{border-color:var(--gold-dim)}
+/* 结果区 */
+#result{display:none}
+#result.show{display:block;animation:fade .35s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.info-bar{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--text-dim)}
+.info-bar b{color:var(--gold)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+.card-h{font-family:var(--serif);font-size:17px;color:var(--gold-bright);margin-bottom:14px;letter-spacing:2px;display:flex;align-items:center;gap:10px}
+.card-h::before{content:"";width:4px;height:17px;background:var(--gold);border-radius:2px}
+/* 八字卡 */
+.bz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bz-col{background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:13px 10px;text-align:center}
+.bz-key{font-size:12px;color:var(--text-faint);margin-bottom:4px}
+.bz-gz{font-family:var(--serif);font-size:22px;color:var(--gold-bright);font-weight:700}
+.bz-ss{font-size:11px;color:var(--gold-dim);margin-top:4px}
+.bz-cg{font-size:11px;color:var(--text-dim);margin-top:6px;line-height:1.5}
+.bz-dy{margin-top:14px;font-size:13px;color:var(--text-dim);line-height:1.9}
+.bz-dy b{color:var(--gold)}
+/* 紫微方格盘 */
+.board{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,minmax(120px,1fr));gap:4px;background:var(--line);border:1px solid var(--line2);border-radius:10px;overflow:hidden}
+.palace{background:var(--card2);padding:8px 7px;font-size:11px;display:flex;flex-direction:column;gap:3px;overflow:hidden;position:relative}
+.palace.soul{background:linear-gradient(135deg,var(--green-bg),var(--card2));box-shadow:inset 0 0 0 1px var(--gold-dim)}
+.palace.body{background:linear-gradient(135deg,var(--red-bg),var(--card2))}
+.p-head{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--text-faint)}
+.p-head .pn{color:var(--gold);font-weight:600;font-size:11px}
+.p-head .pb{color:var(--text-faint)}
+.p-major{font-family:var(--serif);font-size:14px;color:var(--gold-bright);font-weight:600;line-height:1.2}
+.p-major .mut{font-size:10px;color:var(--red);font-weight:400;margin-left:1px}
+.p-minor{font-size:10px;color:var(--text-dim);line-height:1.3}
+.p-dax{position:absolute;bottom:3px;right:5px;font-size:9px;color:var(--gold-dim);opacity:.7}
+.center{grid-column:2/4;grid-row:2/4;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center;gap:6px}
+.center .taiji{font-family:var(--serif);font-size:30px;color:var(--gold-dim);opacity:.5}
+.center .name{font-family:var(--serif);font-size:18px;color:var(--gold-bright)}
+.center .meta{font-size:12px;color:var(--text-dim)}
+.center .meta b{color:var(--gold)}
+/* 解盘区 */
+.interp{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:18px}
+.interp-body{font-size:14px;line-height:1.95;color:var(--text)}
+.interp-body h1,.interp-body h2,.interp-body h3{font-family:var(--serif);color:var(--gold-bright);margin:18px 0 10px;letter-spacing:1px}
+.interp-body h2{font-size:18px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.interp-body h3{font-size:15px}
+.interp-body p{margin:8px 0}
+.interp-body strong,.interp-body b{color:var(--gold)}
+.interp-body ul,.interp-body ol{margin:8px 0 8px 22px}
+.interp-body li{margin:4px 0}
+.loading{text-align:center;padding:30px;color:var(--gold-dim)}
+.loading .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin:0 3px;animation:bounce 1.2s infinite}
+.loading .dot:nth-child(2){animation-delay:.2s}.loading .dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-6px);opacity:1}}
+.err{color:var(--red);background:var(--red-bg);padding:12px 16px;border-radius:8px;font-size:13px}
+.tip{font-size:12px;color:var(--text-faint);margin-top:10px;text-align:center}
+/* API 配置卡 */
+.api-card summary{cursor:pointer;font-family:var(--serif);color:var(--gold-bright);font-size:15px;letter-spacing:2px;user-select:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.api-card summary::marker{color:var(--gold-dim)}
+#api-status{font-family:var(--sans);font-size:12px;letter-spacing:0;padding:2px 10px;border-radius:10px;font-weight:400}
+#api-status.api-ok{color:#7ecf9d;background:var(--green-bg);border:1px solid rgba(78,165,108,.3)}
+#api-status.api-none{color:var(--text-dim);background:var(--bg2);border:1px solid var(--line)}
+.api-note{margin-top:12px;font-size:12px;color:var(--gold-dim);line-height:1.7}
+.api-custom-row{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;color:var(--text-dim);cursor:pointer}
+.api-custom-row input{accent-color:var(--gold)}
+.api-base-wrap{margin-top:12px}
+.api-privacy{margin-top:16px;font-size:12px;color:var(--text-faint);line-height:1.8;border-top:1px dashed var(--line);padding-top:12px}
+/* 解盘模式选择 */
+.mode-sel,.mode-year{padding:9px 13px;background:var(--bg2);border:1px solid var(--line2);border-radius:20px;color:var(--text);font-size:13px;font-family:var(--sans)}
+.mode-sel:focus,.mode-year:focus{outline:none;border-color:var(--gold-dim)}
+.mode-year{width:96px}
+@media(max-width:760px){.bz-grid{grid-template-columns:repeat(2,1fr)}.board{grid-template-rows:repeat(4,minmax(100px,1fr))}.palace{font-size:10px}.center .name{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="h-title">紫微排盘 · 解盘</div>
+    <div class="h-sub">八字 + 紫微斗数 · 浏览器端实时排盘 · AI 解盘自带 Key（智谱 / DeepSeek / Kimi / Claude / Gemini…）</div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-grid">
+      <div class="field"><label>姓名</label><input id="f-name" placeholder="选填"></div>
+      <div class="field"><label>性别</label><select id="f-gender"><option>男</option><option>女</option></select></div>
+      <div class="field"><label>出生日期</label><input id="f-date" type="date"></div>
+      <div class="field"><label>出生时间</label><input id="f-time" type="time"></div>
+      <div class="field"><label>出生地</label><input id="f-region" placeholder="省+市，如 广东省茂名市" list="cities"></div>
+      <datalist id="cities"></datalist>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-paipan">排 盘</button>
+      <select id="f-mode" class="mode-sel">
+        <option value="chart">总体命盘解读</option>
+        <option value="fortune">流年运势</option>
+      </select>
+      <input id="f-year" class="mode-year" type="number" min="1900" max="2100" value="2026" style="display:none" title="流年年份">
+      <button class="btn btn-ghost" id="btn-jiepan" disabled>AI 解盘</button>
+    </div>
+  </div>
+
+  <!-- AI 解盘配置（自带 Key，只存访客浏览器 localStorage） -->
+  <details class="form-card api-card" id="api-card">
+    <summary>⚙️ AI 解盘配置 <span id="api-status" class="api-none">未配置</span></summary>
+    <div class="form-grid" style="margin-top:16px">
+      <div class="field"><label>AI 厂商</label>
+        <select id="api-provider"></select>
+      </div>
+      <div class="field"><label>API Key（只存你自己的浏览器）</label>
+        <input id="api-key" type="password" placeholder="sk-… / 你的 Key" autocomplete="off">
+      </div>
+      <div class="field"><label>模型（可下拉选或手输）</label>
+        <input id="api-model" list="model-list" placeholder="如 deepseek-chat">
+      </div>
+      <datalist id="model-list"></datalist>
+    </div>
+    <div class="api-note" id="api-note"></div>
+    <label class="api-custom-row"><input type="checkbox" id="api-custom"> 自定义接口地址（中转站 / 任意 OpenAI 兼容端点）</label>
+    <div class="field api-base-wrap" id="api-base-wrap" style="display:none;max-width:480px">
+      <label>Base URL（OpenAI 格式填到 /v1；智谱 Claude 格式填 api/anthropic）</label>
+      <input id="api-base" placeholder="https://your-proxy.com/v1">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="api-save">保存配置</button>
+      <button class="btn btn-ghost" id="api-clear">清除</button>
+    </div>
+    <div class="api-privacy">※ 排盘永远免费无需任何配置；Key 只保存在你浏览器的 localStorage，直接从你的浏览器发给所选 AI 厂商，本站无后端、不经手、不存储。</div>
+  </details>
+
+  <div id="result"></div>
+</div>
+
+<script type="module" src="dist/bundle.js"></script>
+</body>
+</html>

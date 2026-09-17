@@ -1,0 +1,17 @@
+name = "ziwei-paipan"
+main = "web/src/worker.js"
+compatibility_date = "2024-11-01"
+
+# Workers Static Assets：静态前端（index.html + dist/bundle.js）由 Cloudflare 托管，
+# /api/* fall through 到 Worker。一个 wrangler deploy 前后端全搞定。
+[assets]
+directory = "./web"
+
+[vars]
+ZHIPU_MODEL = "glm-5.2"
+ZHIPU_BASE_URL = "https://open.bigmodel.cn/api/anthropic"
+# ALLOWED_ORIGIN = "https://你的自定义域名"   # 上线后收紧 CORS（默认 * 方便联调）
+
+# ⚠️ ZHIPU_API_KEY 不要写这里！用 secret 注入：
+#   npx wrangler secret put ZHIPU_API_KEY
+#   （粘贴 .env 里的智谱 key，回车）
