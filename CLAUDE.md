@@ -71,7 +71,7 @@ npm run dev:local    # → http://localhost:5174 （静态 + 本地代理智谱�
 - **BYOK**：`PROVIDERS` 预设表（智谱/DeepSeek/Kimi/通义/豆包/硅基流动/OpenRouter/Gemini/Claude/Groq/自定义中转），配置存 localStorage（`ziwei_byok_cfg`），支持 OpenAI 格式 + Claude 格式（anthropic 自动加 `anthropic-dangerous-direct-browser-access` 头）
 - **两种解盘模式**：总体命盘（八节结构）/ 流年运势（选年份，逐月吉凶）
 - **CORS 实测**：DeepSeek/智谱（anthropic+paas 双格式）✅；OpenAI 官方 ❌（UI 标注走中转）
-- 部署：推 main → GitHub Actions 自动 build:web + 发 Pages（`.github/workflows/pages.yml`）→ **https://xiang8.github.io/ziwei-paipan/**（仓库 github.com/xiang8/ziwei-paipan，凭据走 Git Credential Manager）
+- 部署：推 main → GitHub Actions 自动 build:web + 发 Pages（`.github/workflows/pages.yml`）→ **https://ziwei.005718.xyz**（仓库 github.com/xiang8/ziwei-paipan，凭据走 Git Credential Manager；自定义域名 web/CNAME + Pages API 已配，DNS：Cloudflare `ziwei` CNAME 灰云 → xiang8.github.io）
 - 已验证（2026-09-18）：bundle 排盘与劳翔基准一致；DeepSeek/智谱三通路 HTTP 200
 
 ### 构建

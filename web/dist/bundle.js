@@ -32499,8 +32499,8 @@ var PROVIDERS = {
     label: "\u667A\u8C31 GLM",
     base: "https://open.bigmodel.cn/api/paas/v4",
     style: "openai",
-    models: ["glm-4.7", "glm-4.6", "glm-4-flash"],
-    note: "open.bigmodel.cn \u63A7\u5236\u53F0 API Key\uFF08\u6309\u91CF\u4ED8\u8D39\uFF09"
+    models: ["glm-5.3", "glm-5.2", "glm-4.7", "glm-4-flash"],
+    note: "\u6309\u91CF key \u7528\u672C\u9884\u8BBE\uFF1BCoding \u5957\u9910 key \u8BF7\u52FE\u300C\u81EA\u5B9A\u4E49\u300D\u586B https://open.bigmodel.cn/api/anthropic\uFF08Claude \u683C\u5F0F\uFF09"
   },
   deepseek: {
     label: "DeepSeek",
@@ -32513,49 +32513,49 @@ var PROVIDERS = {
     label: "Kimi \xB7 \u6708\u4E4B\u6697\u9762",
     base: "https://api.moonshot.cn/v1",
     style: "openai",
-    models: ["kimi-k2-0905-preview", "moonshot-v1-128k", "moonshot-v1-32k"],
+    models: ["kimi-k2-turbo-preview", "kimi-k2-0905-preview", "moonshot-v1-128k"],
     note: "platform.moonshot.cn"
   },
   qwen: {
     label: "\u901A\u4E49\u5343\u95EE",
     base: "https://dashscope.aliyuncs.com/compatible-mode/v1",
     style: "openai",
-    models: ["qwen-max", "qwen-plus", "qwen-turbo"],
+    models: ["qwen3-max", "qwen-plus", "qwen-turbo"],
     note: "\u963F\u91CC\u4E91\u767E\u70BC bailian.console.aliyun.com"
   },
   doubao: {
     label: "\u8C46\u5305 \xB7 \u706B\u5C71\u65B9\u821F",
     base: "https://ark.cn-beijing.volces.com/api/v3",
     style: "openai",
-    models: [],
-    note: "\u6A21\u578B\u586B\u63A5\u5165\u70B9 Endpoint ID\uFF08ep- \u5F00\u5934\uFF09\uFF0C\u65B9\u821F\u63A7\u5236\u53F0\u83B7\u53D6"
+    models: ["doubao-seed-1.6", "doubao-seed-1.6-flash"],
+    note: "\u53EF\u586B\u6A21\u578B\u540D\u6216\u63A5\u5165\u70B9 Endpoint ID\uFF08ep- \u5F00\u5934\uFF09\uFF0C\u65B9\u821F\u63A7\u5236\u53F0\u83B7\u53D6"
   },
   siliconflow: {
     label: "\u7845\u57FA\u6D41\u52A8",
     base: "https://api.siliconflow.cn/v1",
     style: "openai",
-    models: ["deepseek-ai/DeepSeek-V3", "Qwen/Qwen2.5-72B-Instruct"],
+    models: ["deepseek-ai/DeepSeek-V3.2", "deepseek-ai/DeepSeek-V3", "Qwen/Qwen3-235B-A22B-Instruct"],
     note: "cloud.siliconflow.cn\uFF0C\u65B0\u6237\u6709\u514D\u8D39\u989D\u5EA6"
   },
   openrouter: {
     label: "OpenRouter",
     base: "https://openrouter.ai/api/v1",
     style: "openai",
-    models: ["deepseek/deepseek-chat", "anthropic/claude-sonnet-4.5", "google/gemini-2.5-flash"],
+    models: ["deepseek/deepseek-chat", "anthropic/claude-sonnet-5", "google/gemini-3-pro-preview"],
     note: "openrouter.ai \u4E00\u4E2A Key \u8C03\u5168\u7403\u6A21\u578B"
   },
   gemini: {
     label: "Gemini",
     base: "https://generativelanguage.googleapis.com/v1beta/openai",
     style: "openai",
-    models: ["gemini-2.5-pro", "gemini-2.5-flash"],
+    models: ["gemini-3-pro-preview", "gemini-2.5-pro", "gemini-2.5-flash"],
     note: "aistudio.google.com \u751F\u6210 API Key\uFF08\u9700\u80FD\u8BBF\u95EE Google\uFF09"
   },
   claude: {
     label: "Claude \xB7 Anthropic",
     base: "https://api.anthropic.com",
     style: "anthropic",
-    models: ["claude-sonnet-4-5", "claude-opus-4-5", "claude-haiku-4-5-20251001"],
+    models: ["claude-sonnet-5", "claude-opus-5", "claude-haiku-4-5"],
     note: "console.anthropic.com"
   },
   groq: {
@@ -32570,7 +32570,7 @@ var PROVIDERS = {
     base: "https://api.openai.com/v1",
     style: "openai",
     cors: false,
-    models: ["gpt-5", "gpt-4o", "gpt-4o-mini"],
+    models: ["gpt-5.1", "gpt-5", "gpt-4o"],
     note: "\u26A0\uFE0F \u5B98\u65B9\u63A5\u53E3\u7981\u6D4F\u89C8\u5668\u76F4\u8FDE\uFF1A\u8BF7\u52FE\u9009\u300C\u81EA\u5B9A\u4E49\u300D\uFF0C\u586B\u4E2D\u8F6C\u7AD9\u5730\u5740"
   },
   custom: {
