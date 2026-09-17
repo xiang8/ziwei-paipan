@@ -69,9 +69,11 @@ npm run dev:local    # → http://localhost:5174 （静态 + 本地代理智谱�
 ### C. 在线版（GitHub Pages，纯静态 BYOK，2026-09-18 改造）
 - **架构**：排盘 iztro/lunar 浏览器算 + 解盘访客自带 Key 浏览器直连厂商 API，**无后端**、站主零费用
 - **BYOK**：`PROVIDERS` 预设表（智谱/DeepSeek/Kimi/通义/豆包/硅基流动/OpenRouter/Gemini/Claude/Groq/自定义中转），配置存 localStorage（`ziwei_byok_cfg`），支持 OpenAI 格式 + Claude 格式（anthropic 自动加 `anthropic-dangerous-direct-browser-access` 头）
+- **模型列表 2026-09-18 全量更新**：智谱 glm-5.3/5.2（实测可用；Coding 套餐 key 走自定义 anthropic 端点，按量 key 用 paas/v4 预设）、Kimi k2-turbo、通义 qwen3-max、豆包 seed-1.6、Gemini 3、Claude 5 系、GPT-5.1；模型名仅快捷项，访客可手填
+- **AI 配置卡**：未配置时默认弹开、保存后收起；排布遵守根 CLAUDE.md「UI 排布爱对称」（标签短化+nowrap、select 固定 height 42px、容器 align-items:center）
 - **两种解盘模式**：总体命盘（八节结构）/ 流年运势（选年份，逐月吉凶）
-- **CORS 实测**：DeepSeek/智谱（anthropic+paas 双格式）✅；OpenAI 官方 ❌（UI 标注走中转）
-- 部署：推 main → GitHub Actions 自动 build:web + 发 Pages（`.github/workflows/pages.yml`）→ **https://ziwei.005718.xyz**（仓库 github.com/xiang8/ziwei-paipan，凭据走 Git Credential Manager；自定义域名 web/CNAME + Pages API 已配，DNS：Cloudflare `ziwei` CNAME 灰云 → xiang8.github.io）
+- **CORS 实测**：DeepSeek/智谱（anthropic+paas 双格式）✅；OpenAI 官方 ❌（UI 标注走中转）；境外厂商大陆访客需自备网络
+- 部署：推 main → GitHub Actions 自动 build:web + 发 Pages（`.github/workflows/pages.yml`）→ **https://ziwei.005718.xyz**（仓库 github.com/xiang8/ziwei-paipan，凭据走 Git Credential Manager；自定义域名 web/CNAME + Pages API 已配；DNS：Cloudflare `ziwei` CNAME **橙云** → xiang8.github.io，橙云走 CF 边缘证书 `*.005718.xyz`（大陆可达 + 免等 GitHub 签证书，2026-09-18 实测生效）
 - 已验证（2026-09-18）：bundle 排盘与劳翔基准一致；DeepSeek/智谱三通路 HTTP 200
 
 ### 构建
